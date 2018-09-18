@@ -21,7 +21,7 @@ Vue.use(Vuex)
 //NProgress.configure({ showSpinner: false });
 
 const router = new VueRouter({
-  routes
+  routes:routes
 })
 
 router.beforeEach((to, from, next) => {
