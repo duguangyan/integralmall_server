@@ -21,4 +21,4 @@ Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
 /**
  * 图片上传
  */
-Route::get('/imgUpload','\App\Controllers\UploadController@imgUpload');
+Route::post('/imgUpload','\App\Controllers\UploadController@imgUpload');
