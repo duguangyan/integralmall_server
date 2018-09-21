@@ -11,4 +11,13 @@
 |
 */
 
-Route::get('/','\App\Http\Controllers\UserController@getUser');
+Route::get('/getUsers/{page}','\App\Controllers\UserController@getUsers');
+Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
+Route::post('/addUser','\App\Controllers\UserController@addUser');
+Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
+Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
+
+/**
+ * 图片上传
+ */
+Route::get('/imgUpload','\App\Controllers\UploadController@imgUpload');
