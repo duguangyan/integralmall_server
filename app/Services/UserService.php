@@ -38,9 +38,9 @@ class UserService extends BaseService
      * @param $id 根据用户id查找用户
      */
     public static function getUserById($id){
-        echo asset('storage/file.txt');
-//        $user = Users::where('id', $id)->get();
-//        return self::JSON('200',$user,'成功');
+//        echo asset('storage/file.txt');
+        $user = Users::where('id', $id)->get();
+        return self::JSON('200',$user,'成功');
     }
 
     /**
