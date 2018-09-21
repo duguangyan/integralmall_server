@@ -10,9 +10,8 @@ class UploadController extends Controller
     /**
      * 上传图片
      */
-    public function imgUpload(){
-        dd(request()->file('imgUpload'));
-        return UploadService::imgUpload(request()->file('imgUpload'));
+    public function imgUpload($id){
+        return UploadService::imgUpload(request()->file('file'),intval($id));
     }
 
 

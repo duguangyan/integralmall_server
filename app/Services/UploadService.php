@@ -8,24 +8,34 @@
 
 namespace App\Services;
 use App\Services\BaseService;
+use App\Models\Users;
 class UploadService extends BaseService
 {
-    public static function imgUpload($file){
+    /**
+     * @param $file
+     * @param $id
+     * @return $this
+     */
+    public static function imgUpload($file, $id){
         $name = request()->input('name');
         $allowed_extensions = ["png", "jpg", "gif"];
         if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
-            return ['error' => 'You may only upload png, jpg or gif.'];
+            //return ['error' => 'You may only upload png, jpg or gif.'];
+            return self::JSON('201','','请上传png、jpg、gif类型的文件');
         }
-        $destinationPath = 'storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
+        $destinationPath = 'public/storage/uploads/'; //public 文件夹下面建 storage/uploads 文件夹
         $extension = $file->getClientOriginalExtension();
         $fileName = str_random(10).'.'.$extension;
         $file->move($destinationPath, $fileName);
         $filePath = asset($destinationPath.$fileName);
-        $info=DB::insert('insert into photo(pname,photo) VALUES (?,?)',[$name,$filePath]);
+        $user = [
+            'headImg'=>$filePath
+        ];
+        $info= Users::where('id',$id)->update($user);
         if($info){
-            return Redirect('/show');
+            return self::JSON('201',$filePath,'上传成功');
         }else{
-            echo "no";
+            return self::JSON('201','','上传失败');
         }
     }
 }
