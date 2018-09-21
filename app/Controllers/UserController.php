@@ -14,7 +14,7 @@ class UserController extends Controller
      * @param $page 第几页
      * @return $this 返回用户列表信息
      */
-    public function getUsers($page){
+    public function getUsers($page=1){
         return UserService::getUsers(intval($page));
     }
 

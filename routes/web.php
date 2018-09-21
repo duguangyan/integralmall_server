@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/','\App\Controllers\UserController@getUsers');
 Route::get('/getUsers/{page}','\App\Controllers\UserController@getUsers');
 Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
 Route::post('/addUser','\App\Controllers\UserController@addUser');
