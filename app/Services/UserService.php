@@ -19,6 +19,7 @@ class UserService extends BaseService
      * 查找用户列表
      */
     public static function getUsers($page){
+
         try{
             if($page<=0){
                 $page = 1;

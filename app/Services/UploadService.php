@@ -33,7 +33,7 @@ class UploadService extends BaseService
         ];
         $info= Users::where('id',$id)->update($user);
         if($info){
-            return self::JSON('201',$filePath,'上传成功');
+            return self::JSON('200',$filePath,'上传成功');
         }else{
             return self::JSON('201','','上传失败');
         }

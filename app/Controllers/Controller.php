@@ -10,10 +10,18 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    // 返回数据json,中文转码
+
+    /**
+     * @param int $code
+     * @param string $data
+     * @param string $msg
+     * @return $this 返回数据json,中文转码
+     */
     public function JSON($code=200,$data='',$msg='成功'){
         $data = ['code'=>$code,'data'=>$data,'msg'=>$msg];
         return response()->json($data)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
+
+
 
 }

@@ -11,6 +11,9 @@
 |
 */
 
+/**
+ * 用户增删改查
+ */
 Route::get('/','\App\Controllers\UserController@getUsers');
 Route::get('/getUsers/{page}','\App\Controllers\UserController@getUsers');
 Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
@@ -22,3 +25,12 @@ Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
  * 图片上传
  */
 Route::post('/imgUpload/{id}','\App\Controllers\UploadController@imgUpload');
+/**
+ * 文件下载
+ */
+Route::get('/fileDownload','\App\Controllers\DownloadController@fileDownload');
+
+/**
+ * 发送邮件
+ */
+Route::get('/sendMail','\App\Controllers\MailController@sendMail');
