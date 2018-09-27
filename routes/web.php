@@ -27,6 +27,7 @@ Route::group(['middleware'=>['login']],function(){
     Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
     Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
 
+
     /**
      * 图片上传
      */
