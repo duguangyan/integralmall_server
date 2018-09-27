@@ -11,8 +11,11 @@ use App\Models\Users;
 use App\Services\BaseService;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use \Exception;
+use Illuminate\Support\Facades\Hash;
 class UserService extends BaseService
 {
     /**
@@ -68,7 +71,9 @@ class UserService extends BaseService
             return  self::JSON('201',$data,'用户名已存在');
         }
         $user['loginName'] = $req['loginName'];
-        $user['loginPwd'] = bcrypt($req['loginPwd']);
+        $user['loginPwd'] = Hash::make($req['loginPwd']);
+        $user['remember_token'] = str_random(20);
+
         // dd($user);
         $res = $user->save();
         // dd($res);
@@ -126,5 +131,27 @@ class UserService extends BaseService
             return self::JSON('201','','失败');
         }
     }
+
+    /**
+     * @param $req
+     * @return int
+     */
+    public static function userLogin($req){
+        $user = Users::where('loginName', $req['loginName'])->first();
+        if(!$user){
+            //如果用户名不存在
+            return self::JSON('201','','用户名不存在');
+        }
+        if(!password_verify($req['loginPwd'], $user->loginPwd)){
+            //密码验证不通过
+            return self::JSON('201','','密码不正确');
+        }
+        if(!$user->userStatus){
+            //用户被冻结
+            return self::JSON('201','','此用户状态异常');
+        }
+        return $user;
+    }
+
 
 }

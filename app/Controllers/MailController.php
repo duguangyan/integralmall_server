@@ -20,8 +20,8 @@ class MailController extends Controller
     public function sendMail()
     {
         Session::put('to','1322530161@qq.com');
-        Session::put('title','重要邮件1');
-        Session::put('content','这个是一封邮件1');
+        Session::put('title','重要邮件asd11dasdasdasdaasd2');
+        Session::put('content','这个是asdasd一封邮件11adaddadasdasdasda2');
         MailService::sendRaw();
     }
 }

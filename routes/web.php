@@ -12,25 +12,32 @@
 */
 
 /**
- * 用户增删改查
+ * 登录
  */
-Route::get('/','\App\Controllers\UserController@getUsers');
-Route::get('/getUsers/{page}','\App\Controllers\UserController@getUsers');
-Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
-Route::post('/addUser','\App\Controllers\UserController@addUser');
-Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
-Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
+Route::post('/userLogin','\App\Controllers\UserController@userLogin');
 
-/**
- * 图片上传
- */
-Route::post('/imgUpload/{id}','\App\Controllers\UploadController@imgUpload');
-/**
- * 文件下载
- */
-Route::get('/fileDownload','\App\Controllers\DownloadController@fileDownload');
+Route::group(['middleware'=>['login']],function(){
+    /**
+     * 用户增删改查
+     */
+    Route::get('/','\App\Controllers\UserController@getUsers');
+    Route::get('/getUsers/{page}','\App\Controllers\UserController@getUsers');
+    Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
+    Route::post('/addUser','\App\Controllers\UserController@addUser');
+    Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
+    Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
 
-/**
- * 发送邮件
- */
-Route::get('/sendMail','\App\Controllers\MailController@sendMail');
+    /**
+     * 图片上传
+     */
+    Route::post('/imgUpload/{id}','\App\Controllers\UploadController@imgUpload');
+    /**
+     * 文件下载
+     */
+    Route::get('/fileDownload','\App\Controllers\DownloadController@fileDownload');
+
+    /**
+     * 发送邮件
+     */
+    Route::get('/sendMail','\App\Controllers\MailController@sendMail');
+});

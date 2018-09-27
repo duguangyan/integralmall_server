@@ -17,7 +17,7 @@ class UploadService extends BaseService
      * @return $this
      */
     public static function imgUpload($file, $id){
-        $name = request()->input('name');
+
         $allowed_extensions = ["png", "jpg", "gif"];
         if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
             //return ['error' => 'You may only upload png, jpg or gif.'];

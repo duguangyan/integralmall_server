@@ -44,8 +44,31 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+//    public function render($request, Exception $exception)
+//    {
+//        return parent::render($request, $exception);
+//    }
+// Handler的render函数
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        // 如果config配置debug为true ==>debug模式的话让laravel自行处理
+        if(config('app.debug')){
+            return parent::render($request, $e);
+        }
+        return $this->handle($request, $e);
+    }
+
+    // 新添加的handle函数
+    public function handle($request, Exception $e){
+        // 只处理自定义的APIException异常
+        if($e instanceof ApiException) {
+            $result = [
+                "msg"    => "",
+                "data"   => $e->getMessage(),
+                "code" => 0
+            ];
+            return response()->json($result);
+        }
+        return parent::render($request, $e);
     }
 }

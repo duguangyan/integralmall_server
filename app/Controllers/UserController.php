@@ -46,4 +46,12 @@ class UserController extends Controller
     public function deleteUser($id){
         return UserService::deleteUser($id);
     }
+
+    /**
+     * µÇÂ¼
+     */
+    public function userLogin(){
+        return UserService::userLogin(request()->all());
+    }
+
 }
