@@ -14,7 +14,7 @@
 /**
  * 登录
  */
-Route::get('/','\App\Controllers\UserController@userLogin');
+Route::post('/','\App\Controllers\UserController@userLogin');
 Route::post('/userLogin','\App\Controllers\UserController@userLogin');
 
 Route::group(['middleware'=>['login']],function(){

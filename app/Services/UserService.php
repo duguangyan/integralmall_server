@@ -137,6 +137,17 @@ class UserService extends BaseService
      * @return int
      */
     public static function userLogin($req){
+        $validator = Validator::make($req, array(
+                'loginName' => 'required|min:3',
+                'loginPwd' => 'required')
+        );
+        if ($validator->fails()) {
+            $err = $validator->errors()->toArray();
+            //dd($err);
+            foreach ($err as $k => $v){
+                return self::JSON('201','',$v[0]);
+            }
+        }
         $user = Users::where('loginName', $req['loginName'])->first();
         if(!$user){
             //如果用户名不存在
