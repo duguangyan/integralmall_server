@@ -15,12 +15,13 @@ class CrossHttp
      */
     public function handle($request, Closure $next)
     {
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Credentials: true");
-        header("Access-Control-Allow-Methods: *");
-        header("Access-Control-Allow-Headers: Content-Type,Access-Token");
-        header("Access-Control-Expose-Headers: *");
+        $response = $next($request);
 
-        return $next($request);
+        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Cookie, X-CSRF-TOKEN, Accept, Authorization, X-XSRF-TOKEN');
+        $response->header('Access-Control-Expose-Headers', 'Authorization, authenticated');
+        $response->header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, OPTIONS');
+        $response->header('Access-Control-Allow-Credentials', 'true');
+        return $response;
     }
 }
