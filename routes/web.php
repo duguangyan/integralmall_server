@@ -14,20 +14,10 @@
 /**
  * 登录
  */
+Route::get('/','\App\Controllers\UserController@userLogin');
 Route::post('/userLogin','\App\Controllers\UserController@userLogin');
 
 Route::group(['middleware'=>['login']],function(){
-    /**
-     * 用户增删改查
-     */
-    Route::get('/','\App\Controllers\UserController@getUsers');
-    Route::get('/getUsers/{page}','\App\Controllers\UserController@getUsers');
-    Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
-    Route::post('/addUser','\App\Controllers\UserController@addUser');
-    Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
-    Route::get('/deleteUser/{id}','\App\Controllers\UserController@deleteUser');
-
-
     /**
      * 图片上传
      */
@@ -41,4 +31,24 @@ Route::group(['middleware'=>['login']],function(){
      * 发送邮件
      */
     Route::get('/sendMail','\App\Controllers\MailController@sendMail');
+
+    /**
+     * 用户增删改查
+     */
+    Route::get('/getUsers/{page}', '\App\Controllers\UserController@getUsers');
+    Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
+    Route::post('/addUser',        '\App\Controllers\UserController@addUser');
+    Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
+    Route::get('/deleteUser/{id}', '\App\Controllers\UserController@deleteUser');
+
+    //商品信息增删改查
+    Route::post('/getGoods',        '\App\Controllers\GoodsController@getGoods');
+    Route::get('/getGoodById/{id}', '\App\Controllers\GoodsController@getGoodById');
+    Route::post('/addGood',         '\App\Controllers\GoodsController@addGood');
+    Route::post('/updateGood',      '\App\Controllers\GoodsController@updateGood');
+    Route::get('/deleteGood/{id}',  '\App\Controllers\GoodsController@deleteGood');
+
 });
+
+
+

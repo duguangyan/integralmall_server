@@ -150,7 +150,15 @@ class UserService extends BaseService
             //用户被冻结
             return self::JSON('201','','此用户状态异常');
         }
-        return $user;
+        // 移除loginPwd字段
+        foreach($user->toArray() as $k=>$v){
+            //dd($k);
+            if($k == 'loginPwd'){
+                unset($user[$k]);
+            }
+        }
+
+         return self::JSON('201',$user,'失败');;
     }
 
 
