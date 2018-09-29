@@ -32,9 +32,9 @@ class UserService extends BaseService
             $users = Users::where('userStatus','1')->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
             $total = Users::where('userStatus','1')->count();
             $data = ['users'=>$users,'toital'=>$total];
-            return self::JSON('200',$data,'成功');
+            return self::JSON(200,$data,'成功');
         }catch ( Exception $e ) {
-            return self::JSON('201','','参数错误');
+            return self::JSON(201,'','参数错误');
         }
 
     }
@@ -44,7 +44,7 @@ class UserService extends BaseService
     public static function getUserById($id){
 //        echo asset('storage/file.txt');
         $user = Users::where('id', $id)->get();
-        return self::JSON('200',$user,'成功');
+        return self::JSON(200,$user,'成功');
     }
 
     /**
@@ -60,7 +60,7 @@ class UserService extends BaseService
             $err = $validator->errors()->toArray();
             //dd($err);
             foreach ($err as $k => $v){
-                return self::JSON('201','',$v[0]);
+                return self::JSON(201,'',$v[0]);
             }
         }
 
@@ -68,7 +68,7 @@ class UserService extends BaseService
         $hasUser = Users::all()->where('loginName',$req['loginName']);
         if(count($hasUser)>0){
             $data = '';
-            return  self::JSON('201',$data,'用户名已存在');
+            return  self::JSON(201,$data,'用户名已存在');
         }
         $user['loginName'] = $req['loginName'];
         $user['loginPwd'] = Hash::make($req['loginPwd']);
@@ -82,7 +82,7 @@ class UserService extends BaseService
             return self::JSON($data);
         }else{
             $data = $res;
-            return self::JSON('201',$data,'失败');
+            return self::JSON(201,$data,'失败');
         }
     }
 
@@ -98,7 +98,7 @@ class UserService extends BaseService
             $err = $validator->errors()->toArray();
             //dd($err);
             foreach ($err as $k => $v){
-                return self::JSON('201','',$v[0]);
+                return self::JSON(201,'',$v[0]);
             }
         }
         $user = [
@@ -107,28 +107,21 @@ class UserService extends BaseService
         ];
         $result = Users::where('id',$id)->update($user);
         if($result){
-            return self::JSON('200','','成功');
+            return self::JSON(200,'','成功');
         }else{
-            return self::JSON('201','','失败');
+            return self::JSON(201,'','失败');
         }
     }
 
     public static function deleteUser($id){
-        //$result = Users::destroy(49);
-        // print_r($result);
-//        if($result){
-//            return self::JSON('200','','成功');
-//        }else{
-//            return self::JSON('201','','失败');
-//        }
         $user = [
             'userStatus'=>0
         ];
         $result = Users::where('id',$id)->update($user);
         if($result){
-            return self::JSON('200','','成功');
+            return self::JSON(200,'','成功');
         }else{
-            return self::JSON('201','','失败');
+            return self::JSON(201,'','失败');
         }
     }
 
@@ -145,21 +138,21 @@ class UserService extends BaseService
             $err = $validator->errors()->toArray();
             //dd($err);
             foreach ($err as $k => $v){
-                return self::JSON('201','',$v[0]);
+                return self::JSON(201,'',$v[0]);
             }
         }
         $user = Users::where('loginName', $req['loginName'])->first();
         if(!$user){
             //如果用户名不存在
-            return self::JSON('201','','用户名不存在');
+            return self::JSON(201,'','用户名不存在');
         }
         if(!password_verify($req['loginPwd'], $user->loginPwd)){
             //密码验证不通过
-            return self::JSON('201','','密码不正确');
+            return self::JSON(201,'','密码不正确');
         }
         if(!$user->userStatus){
             //用户被冻结
-            return self::JSON('201','','此用户状态异常');
+            return self::JSON(201,'','此用户状态异常');
         }
         // 移除loginPwd字段
         foreach($user->toArray() as $k=>$v){
@@ -169,7 +162,7 @@ class UserService extends BaseService
             }
         }
 
-         return self::JSON('200',$user,'登录成功');;
+         return self::JSON(200,$user,'登录成功');;
     }
 
 

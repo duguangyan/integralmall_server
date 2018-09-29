@@ -39,9 +39,9 @@ class GoodsService extends BaseService
                 ->where('goodsFlag',1)
                 ->count();
             $data = ['goods'=>$goods,'toital'=>$total];
-            return self::JSON('200',$data,'成功');
+            return self::JSON(200,$data,'成功');
         }catch ( Exception $e ) {
-            return self::JSON('201','','参数错误');
+            return self::JSON(201,'','参数错误');
         }
 
     }
@@ -72,14 +72,14 @@ class GoodsService extends BaseService
             $err = $validator->errors()->toArray();
             //dd($err);
             foreach ($err as $k => $v){
-                return self::JSON('201','',$v[0]);
+                return self::JSON(201,'',$v[0]);
             }
         }
         $good = new Goods();
         $hasGood = Goods::all()->where('goodsName',$params['goodsName']);
         if(count($hasGood)>0){
             $data = '';
-            return  self::JSON('201',$data,'商品已经存在');
+            return  self::JSON(201,$data,'商品已经存在');
         }
 
         $good['goodsName']   = $params['goodsName'];
@@ -103,7 +103,7 @@ class GoodsService extends BaseService
             return self::JSON($res);
         }else{
             $data = $res;
-            return self::JSON('201',$data,'失败');
+            return self::JSON(201,$data,'失败');
         }
     }
 
@@ -133,7 +133,7 @@ class GoodsService extends BaseService
             $err = $validator->errors()->toArray();
             //dd($err);
             foreach ($err as $k => $v){
-                return self::JSON('201','',$v[0]);
+                return self::JSON(201,'',$v[0]);
             }
         }
         $good = [
@@ -154,9 +154,9 @@ class GoodsService extends BaseService
         ];
         $result = Goods::where('id',$params['id'])->update($good);
         if($result){
-            return self::JSON('200','','成功');
+            return self::JSON(200,'','成功');
         }else{
-            return self::JSON('201','','失败');
+            return self::JSON(201,'','失败');
         }
 
     }
@@ -169,9 +169,9 @@ class GoodsService extends BaseService
     public static function getGoodById($id){
         $good =  Goods::where('id',$id)->get();
         if(count($good)){
-            return self::JSON('200',$good,'根据id获取商品成功');
+            return self::JSON(200,$good,'根据id获取商品成功');
         }else{
-            return self::JSON('201','','根据id获取商品失败');
+            return self::JSON(201,'','根据id获取商品失败');
         }
     }
 
@@ -187,9 +187,9 @@ class GoodsService extends BaseService
         ];
         $result = Goods::where('id',$id)->update($good);
         if($result){
-            return self::JSON('200','','成功');
+            return self::JSON(200,'','成功');
         }else{
-            return self::JSON('201','','失败');
+            return self::JSON(201,'','失败');
         }
     }
 
