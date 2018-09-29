@@ -72,7 +72,7 @@ class UserService extends BaseService
         }
         $user['loginName'] = $req['loginName'];
         $user['loginPwd'] = Hash::make($req['loginPwd']);
-        $user['remember_token'] = str_random(20);
+        $user['remember_token'] = str_random(50);
 
         // dd($user);
         $res = $user->save();
