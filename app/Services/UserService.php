@@ -169,7 +169,7 @@ class UserService extends BaseService
             }
         }
 
-         return self::JSON('201',$user,'失败');;
+         return self::JSON('200',$user,'登录成功');;
     }
 
 

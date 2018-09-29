@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-class BeforeUserLoginMiddleware extends EnableCrossRequestMiddleware
+class BeforeUserLoginMiddleware
 {
     /**
      * Handle an incoming request.
