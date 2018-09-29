@@ -18,7 +18,7 @@ class BeforeUserLoginMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $token =  $request->header('token');
+        $token =  $request->header('Authorization');
         $user = Users::all()->where('remember_token',$token)->toArray();
         if(!count($user)){
             $data = array('code' => 401,'data'=>'','msg' => "请先登录");
