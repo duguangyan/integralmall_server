@@ -31,7 +31,7 @@ class UserService extends BaseService
             $skip = ($page-1) * $number;
             $users = Users::where('userStatus','1')->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
             $total = Users::where('userStatus','1')->count();
-            $data = ['users'=>$users,'toital'=>$total];
+            $data = ['users'=>$users,'total'=>$total];
             return self::JSON(200,$data,'成功');
         }catch ( Exception $e ) {
             return self::JSON(201,'','参数错误');
