@@ -7,14 +7,15 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * @param $page µÚ¼¸Ò³
-     * @return $this ·µ»ØÓÃ»§ÁÐ±íÐÅÏ¢
+     * @param $page ï¿½Ú¼ï¿½Ò³
+     * @return $this ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ð±ï¿½ï¿½ï¿½Ï¢
      */
     public function getUsers(){
+
         $rules = [
             'page' => 'required|integer',
         ];
@@ -29,8 +30,8 @@ class UserController extends Controller
     }
 
     /**
-     * @param $id ¸ù¾ÝÓÃ»§id²éÕÒÓÃ»§ÐÅÏ¢
-     * @return $this ·µ»ØÓÃ»§ÐÅÏ¢
+     * @param $id ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
+     * @return $this ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
      */
     public function getUserById($id){
 
@@ -38,28 +39,41 @@ class UserController extends Controller
     }
 
     /**
-     * @return Ìí¼ÓÓÃ»§
+     * @return ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
      */
     public function addUser(){
-        return UserService::addUser(request()->all());
+
+        $user['loginName'] = str_random(10);
+        $user['loginPwd'] = Hash::make(123456);
+        $user['remember_token'] = str_random(50);
+        $res = Users::create($user);
+        // dd($this->JSON(200,'',''));
+
+        
+        if(count($res)>0){
+            return $this->JSON(200,'','æˆåŠŸ');
+        }else{
+            return $this->JSON(200,'','å¤±è´¥');
+        }
+        //return UserService::addUser(request()->all());
     }
 
     /**
-     * @param $id¸ù¾ÝÓÃ»§idÐÞ¸ÄÓÃ»§ÐÅÏ¢
+     * @param $idï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½idï¿½Þ¸ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
      */
     public function updateUser($id){
         return UserService::updateUser($id,request()->all());
     }
 
     /**
-     * @param $id ¸ù¾ÝidÉ¾³ýÓÃ»§
+     * @param $id ï¿½ï¿½ï¿½ï¿½idÉ¾ï¿½ï¿½ï¿½Ã»ï¿½
      */
     public function deleteUser($id){
         return UserService::deleteUser($id);
     }
 
     /**
-     * µÇÂ¼
+     * ï¿½ï¿½Â¼
      */
     public function userLogin(){
         return UserService::userLogin(request()->all());

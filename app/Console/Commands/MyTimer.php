@@ -39,11 +39,14 @@ class MyTimer extends Command
     public function handle()
     {
         //
-        $name = str_random(6);
-        $data = [
-            'loginName'=>$name,
-            'loginPwd'=>'123456'
-        ];
-        Users::create($data);
+        $user['loginName'] = str_random(10);
+        $user['loginPwd'] = Hash::make(123456);
+        $user['remember_token'] = str_random(50);
+        $res = Users::create($user);
+        if(count($res)>0){
+            return $this->JSON(200,'','成功');
+        }else{
+            return $this->JSON(200,'','失败');
+        }
     }
 }
