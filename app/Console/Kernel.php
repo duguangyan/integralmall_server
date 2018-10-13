@@ -5,7 +5,7 @@ namespace App\Console;
 use App\Models\Users;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use Illuminate\Support\Facades\Hash;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -15,7 +15,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\MyTimer::class
     ];
 
     /**
@@ -28,14 +27,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-
-            $schedule->command('mytimer')
-                  ->everyMinute();
-
-//        $schedule->call(function () {
-//
-//        })->everyMinute();
-
+        $user['loginName'] = str_random(10);
+        $user['loginPwd'] = Hash::make(123456);
+        $user['remember_token'] = str_random(50);
+        Users::create($user);
     }
 
     /**

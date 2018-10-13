@@ -47,9 +47,7 @@ class UserController extends Controller
         $user['loginPwd'] = Hash::make(123456);
         $user['remember_token'] = str_random(50);
         $res = Users::create($user);
-        // dd($this->JSON(200,'',''));
 
-        
         if(count($res)>0){
             return $this->JSON(200,'','成功');
         }else{
