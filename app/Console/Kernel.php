@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Users;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\MyTimer::class
     ];
 
     /**
@@ -26,6 +28,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+            $schedule->command('mytimer')
+                  ->everyMinute();
+
+//        $schedule->call(function () {
+//
+//        })->everyMinute();
+
     }
 
     /**

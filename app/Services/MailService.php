@@ -27,15 +27,15 @@ class MailService extends BaseService
             $title = Session::get('title');
             $msg->from('dis2010@126.com','duguangyan');
             $msg->subject($title);
-            $msg->to($to);
+            $msg->to($to)->cc('dis2010@126.com');;
         });
 
-//        if(count(Mail::failures()) == 0){
-//            return self::JSON('200','','发送成功');
-//        }else{
-//            throw new ApiException('邮件发送失败');
-//            //self::JSON('201','','发送失败');
-//        }
+        // dd(count(Mail::failures()));
+        if(count(Mail::failures()) == 0){
+            return self::JSON(200,'','发送成功');
+        }else{
+            return self::JSON(201,'','发送失败');
+        }
 
     }
 }

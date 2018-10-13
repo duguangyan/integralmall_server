@@ -91,7 +91,8 @@ return [
     */
     'attributes'           => [
         'loginName' => '用户名',
-        'loginPwd'  => '密码'
+        'loginPwd'  => '密码',
+        'page'  => '页面参数'
     ],
 
 ];

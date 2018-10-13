@@ -14,8 +14,18 @@ class UserController extends Controller
      * @param $page 第几页
      * @return $this 返回用户列表信息
      */
-    public function getUsers($page=1){
-        return UserService::getUsers(intval($page));
+    public function getUsers(){
+        $rules = [
+            'page' => 'required|integer',
+        ];
+
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            $err = $validator->errors()->messages()['page'][0];
+            return $this->JSON(208,'',$err);
+        }
+
+        return UserService::getUsers(request()->all());
     }
 
     /**
@@ -23,6 +33,7 @@ class UserController extends Controller
      * @return $this 返回用户信息
      */
     public function getUserById($id){
+
         return UserService::getUserById($id);
     }
 

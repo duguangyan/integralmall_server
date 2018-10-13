@@ -9,9 +9,10 @@
 namespace App\Controllers;
 
 
+use App\Exceptions\ApiException;
 use App\Services\MailService;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Validator;
 class MailController extends Controller
 {
     /**
@@ -19,9 +20,24 @@ class MailController extends Controller
      */
     public function sendMail()
     {
-        Session::put('to','1322530161@qq.com');
-        Session::put('title','重要邮件asd11dasdasdasdaasd2');
-        Session::put('content','这个是asdasd一封邮件11adaddadasdasdasda2');
-        MailService::sendRaw();
+        $string_random =  str_random(8);
+        $rules = [
+            'title' => 'required',
+            'content' => 'required',
+            'to' => 'required|email',
+        ];
+        $validator = Validator::make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return $this->JSON(208,$validator->errors()->first(),'参数错误');
+        }
+        Session::put('to',(request()->all())['to']);
+        Session::put('title',(request()->all())['title']);
+        Session::put('content',(request()->all())['content']);
+        try{
+            return MailService::sendRaw();
+        }catch (ApiException $e){
+            return $this->JSON('201',$e->getMessage(),'发送失败');
+        }
+
     }
 }

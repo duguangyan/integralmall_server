@@ -19,9 +19,6 @@ class GoodsService extends BaseService
         $page = intval($params['page']);
         // dd($params);
         try{
-            if($page<=0){
-                $page = 1;
-            }
             $number = 10;
             $skip = ($page-1) * $number;
 
@@ -29,16 +26,17 @@ class GoodsService extends BaseService
             if(isset($params['condition'])&&''!=$params['condition']){
                 $goods = $goods->where('goodsName','like','%'.$params['condition'].'%');
             }
-            $goods = $goods->where('isSale','1')
-                ->where('goodsStatus',1)
-                ->where('goodsFlag',1)
-                ->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
+
 
             $total = $goods->where('isSale','1')
                 ->where('goodsStatus',1)
                 ->where('goodsFlag',1)
                 ->count();
-            $data = ['goods'=>$goods,'toital'=>$total];
+            $goods = $goods->where('isSale','1')
+                ->where('goodsStatus',1)
+                ->where('goodsFlag',1)
+                ->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
+            $data = ['goods'=>$goods,'total'=>$total];
             return self::JSON(200,$data,'成功');
         }catch ( Exception $e ) {
             return self::JSON(201,'','参数错误');

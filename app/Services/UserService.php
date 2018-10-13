@@ -21,28 +21,33 @@ class UserService extends BaseService
     /**
      * 查找用户列表
      */
-    public static function getUsers($page){
+    public static function getUsers($params){
 
-        try{
-            if($page<=0){
-                $page = 1;
-            }
-            $number = 10;
-            $skip = ($page-1) * $number;
-            $users = Users::where('userStatus','1')->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
-            $total = Users::where('userStatus','1')->count();
-            $data = ['users'=>$users,'total'=>$total];
+        $page = $params['page'];
+
+        $number = 10;
+        $skip = ($page-1) * $number;
+
+        $user = new Users();
+        if(isset($params['loginName'])&&''!=$params['loginName']){
+            $user = $user->where('loginName','like','%'.$params['loginName'].'%')
+                ->where('userStatus','1')
+                ->orderBy('created_at', 'DESC')->get();
+            $total = $user->where('userStatus','1')->count();
+            $data = ['users'=>$user,'total'=>$total];
             return self::JSON(200,$data,'成功');
-        }catch ( Exception $e ) {
-            return self::JSON(201,'','参数错误');
         }
+        $users = $user->where('userStatus','1')->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
+        $total = $user->where('userStatus','1')->count();
+        $data = ['users'=>$users,'total'=>$total];
+        return self::JSON(200,$data,'成功');
+
 
     }
     /**
      * @param $id 根据用户id查找用户
      */
     public static function getUserById($id){
-//        echo asset('storage/file.txt');
         $user = Users::where('id', $id)->get();
         return self::JSON(200,$user,'成功');
     }
@@ -114,15 +119,32 @@ class UserService extends BaseService
     }
 
     public static function deleteUser($id){
-        $user = [
-            'userStatus'=>0
-        ];
-        $result = Users::where('id',$id)->update($user);
-        if($result){
-            return self::JSON(200,'','成功');
+        $arr = explode(",", $id );
+        if(count($arr)>1){
+            $num = count($arr);
+            for($i=0;$i<$num;++$i){
+                $user = [
+                    'userStatus'=>0
+                ];
+                $result = Users::where('id',$arr[$i])->update($user);
+            }
+            if($result){
+                return self::JSON(200,'','成功');
+            }else{
+                return self::JSON(201,'','失败');
+            }
         }else{
-            return self::JSON(201,'','失败');
+            $user = [
+                'userStatus'=>0
+            ];
+            $result = Users::where('id',$id)->update($user);
+            if($result){
+                return self::JSON(200,'','成功');
+            }else{
+                return self::JSON(201,'','失败');
+            }
         }
+
     }
 
     /**
