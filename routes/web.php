@@ -31,8 +31,9 @@ Route::get('/fileDownload','\App\Controllers\DownloadController@fileDownload');
  */
 Route::get('/sendMail','\App\Controllers\MailController@sendMail');
 
-Route::group(['middleware'=>['login']],function(){
 
+
+Route::group(['middleware'=>['login']],function(){
 
     /**
      * 用户增删改查
@@ -49,6 +50,11 @@ Route::group(['middleware'=>['login']],function(){
     Route::post('/addGood',         '\App\Controllers\GoodsController@addGood');
     Route::post('/updateGood',      '\App\Controllers\GoodsController@updateGood');
     Route::get('/deleteGood/{id}',  '\App\Controllers\GoodsController@deleteGood');
+
+    // 获取地址
+    Route::get('/getDtArea',  '\App\Controllers\DtAreaController@getDtArea');
+
+    Route::post('/getGuzzlehttp',  '\App\Controllers\DtAreaController@getGuzzlehttp');
 
 });
 

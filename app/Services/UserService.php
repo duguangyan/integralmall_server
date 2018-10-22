@@ -28,17 +28,18 @@ class UserService extends BaseService
         $number = 10;
         $skip = ($page-1) * $number;
 
-        $user = new Users();
+
         if(isset($params['loginName'])&&''!=$params['loginName']){
-            $user = $user->where('loginName','like','%'.$params['loginName'].'%')
+
+            $user = Users::with('getOrders')->where('loginName','like','%'.$params['loginName'].'%')
                 ->where('userStatus','1')
                 ->orderBy('created_at', 'DESC')->get();
-            $total = $user->where('userStatus','1')->count();
+            $total = Users::where('userStatus','1')->count();
             $data = ['users'=>$user,'total'=>$total];
             return self::JSON(200,$data,'成功');
         }
-        $users = $user->where('userStatus','1')->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
-        $total = $user->where('userStatus','1')->count();
+        $users = Users::with('getOrders')->where('userStatus','1')->skip($skip)->take($number)->orderBy('created_at', 'DESC')->get();
+        $total = Users::where('userStatus','1')->count();
         $data = ['users'=>$users,'total'=>$total];
         return self::JSON(200,$data,'成功');
 
