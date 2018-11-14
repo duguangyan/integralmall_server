@@ -15,7 +15,7 @@
  * 登录
  */
 // Route::post('/','\App\Controllers\UserController@userLogin');
-Route::post('/','\App\Controllers\UserController@getUsers');
+Route::get('/','\App\Controllers\UserController@getUsers');
 Route::post('/userLogin','\App\Controllers\UserController@userLogin');
 
 /**
@@ -39,7 +39,7 @@ Route::group(['middleware'=>['login']],function(){
     /**
      * 用户增删改查
      */
-    Route::post('/getUsers', '\App\Controllers\UserController@getUsers');
+    Route::get('/getUsers', '\App\Controllers\UserController@getUsers');
     Route::get('/getUserById/{id}','\App\Controllers\UserController@getUserById');
     Route::post('/addUser',        '\App\Controllers\UserController@addUser');
     Route::post('/updateUser/{id}','\App\Controllers\UserController@updateUser');
