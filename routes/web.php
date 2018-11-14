@@ -14,7 +14,8 @@
 /**
  * 登录
  */
-Route::post('/','\App\Controllers\UserController@userLogin');
+// Route::post('/','\App\Controllers\UserController@userLogin');
+Route::post('/','\App\Controllers\UserController@getUsers');
 Route::post('/userLogin','\App\Controllers\UserController@userLogin');
 
 /**
